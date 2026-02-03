@@ -120,6 +120,64 @@ select,button.add{width:100%;margin-top:6px;padding:6px;border-radius:6px}
 </div>
 </div>
 
+<div class="productos">
+
+<!-- REMERA -->
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1520975922284-6d8c47f98f6c">
+<div class="info">
+<h3>Remera Oversize Negra</h3>
+<p class="precio">$12000</p>
+<select id="talle1">
+<option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<p class="stock">Stock alto</p>
+<button class="add" onclick="agregar('Remera Oversize Negra',12000,'talle1')">Agregar</button>
+</div>
+</div>
+
+<!-- BUZO -->
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
+<div class="info">
+<h3>Buzo Hoodie Gris</h3>
+<p class="precio">$25000</p>
+<select id="talle2">
+<option>M</option><option>L</option><option>XL</option>
+</select>
+<p class="stock">Stock bajo</p>
+<button class="add" onclick="agregar('Buzo Hoodie Gris',25000,'talle2')">Agregar</button>
+</div>
+</div>
+
+<!-- PANTALÓN -->
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1528701800489-20be1c97b5e4">
+<div class="info">
+<h3>Pantalón Cargo</h3>
+<p class="precio">$30000</p>
+<select id="talle3">
+<option>38</option><option>40</option><option>42</option><option>44</option>
+</select>
+<p class="stock">Stock alto</p>
+<button class="add" onclick="agregar('Pantalón Cargo',30000,'talle3')">Agregar</button>
+</div>
+</div>
+
+<!-- GORRA -->
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1516826957135-700dedea698c">
+<div class="info">
+<h3>Gorra Urban</h3>
+<p class="precio">$8000</p>
+<select id="talle4">
+<option>Único</option>
+</select>
+<p class="stock">Últimas unidades</p>
+<button class="add" onclick="agregar('Gorra Urban',8000,'talle4')">Agregar</button>
+</div>
+</div>
+
 </div>
 
 <div class="carrito" id="carrito">
@@ -130,30 +188,56 @@ select,button.add{width:100%;margin-top:6px;padding:6px;border-radius:6px}
 </div>
 
 <script>
-let total=0,items=[]
+let carrito = [];
+let total = 0;
 
 function toggleMenu(){
-  menu.style.display=menu.style.display=="flex"?"none":"flex"
+  menu.style.display = menu.style.display=="flex" ? "none" : "flex";
 }
+
 function toggleDark(){
-  document.body.classList.toggle("dark")
+  document.body.classList.toggle("dark");
 }
-function agregar(prod,precio){
-  items.push(prod)
-  total+=precio
-  document.getElementById("total").innerText=total
-  document.getElementById("lista").innerText=items.join(", ")
+
+function agregar(nombre, precio, talleID){
+  const talle = document.getElementById(talleID).value;
+  carrito.push({nombre, precio, talle});
+  total += precio;
+  actualizarCarrito();
 }
+
+function quitar(index){
+  total -= carrito[index].precio;
+  carrito.splice(index,1);
+  actualizarCarrito();
+}
+
+function actualizarCarrito(){
+  let lista = "";
+  carrito.forEach((p,i)=>{
+    lista += `${p.nombre} (Talle ${p.talle}) - $${p.precio} ❌<br>
+    <button onclick="quitar(${i})">Quitar</button><br>`;
+  });
+  document.getElementById("lista").innerHTML = lista || "Carrito vacío";
+  document.getElementById("total").innerText = total;
+}
+
 function verCarrito(){
-  const c=document.getElementById("carrito")
-  c.style.display=c.style.display=="block"?"none":"block"
+  const c = document.getElementById("carrito");
+  c.style.display = c.style.display=="block" ? "none" : "block";
 }
+
 function comprarWsp(){
-  const msg=`Pedido: ${items.join(", ")} Total $${total}`
-  window.open(`https://wa.me/549XXXXXXXXXX?text=${encodeURIComponent(msg)}`)
+  let msg = "🛍️ Pedido:\n";
+  carrito.forEach(p=>{
+    msg += `- ${p.nombre} (Talle ${p.talle}) $${p.precio}\n`;
+  });
+  msg += `\nTotal: $${total}`;
+  window.open(`https://wa.me/549XXXXXXXXXX?text=${encodeURIComponent(msg)}`);
 }
+
 function pagarMP(){
-  window.open("https://link.mercadopago.com.ar/tutienda")
+  window.open("https://link.mercadopago.com.ar/tutienda");
 }
 </script>
 
