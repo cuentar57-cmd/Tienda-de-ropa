@@ -8,147 +8,64 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:#f4f4f4;color:#000;transition:.3s}
 
-body{
-  background:#f4f4f4;
-}
+/* DARK MODE */
+.dark{background:#121212;color:#fff}
+.dark .producto{background:#1e1e1e}
+.dark header,.dark nav{background:#000}
 
 /* HEADER */
-header{
-  background:#000;
-  color:#fff;
-  padding:20px;
-}
+header{background:#000;color:#fff;padding:15px}
+.header{display:flex;justify-content:space-between;align-items:center}
+.menu-btn{font-size:22px;cursor:pointer}
 
-.header-container{
-  max-width:1200px;
-  margin:auto;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-nav a{
-  color:#fff;
-  margin-left:15px;
-  text-decoration:none;
-  font-size:14px;
-}
+/* MENU */
+nav{display:none;flex-direction:column;background:#111}
+nav a{padding:15px;color:#fff;text-decoration:none;border-top:1px solid #222}
 
 /* BANNER */
 .banner{
   background:url("https://images.unsplash.com/photo-1521335629791-ce4aec67dd53") center/cover;
-  height:300px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  text-align:center;
+  height:220px;display:flex;align-items:center;justify-content:center
 }
+.banner h1{background:rgba(0,0,0,.6);color:#fff;padding:10px 20px;border-radius:10px}
 
-.banner h1{
-  font-size:40px;
-  background:rgba(0,0,0,0.6);
-  padding:15px 30px;
-  border-radius:10px;
-}
-
-/* CATEGORIAS */
-.categorias{
-  display:flex;
-  gap:15px;
-  justify-content:center;
-  margin:30px 0;
-}
-
-.categoria{
-  background:#000;
-  color:#fff;
-  padding:10px 20px;
-  border-radius:20px;
-  font-size:14px;
-}
+/* BOTONES */
+.top-btns{display:flex;justify-content:space-between;padding:10px}
+.top-btns button{border:none;padding:8px 14px;border-radius:20px;cursor:pointer}
 
 /* PRODUCTOS */
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:0 15px 40px;
-}
-
-.titulo{
-  font-size:26px;
-  margin:20px 0;
-}
-
 .productos{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;padding:15px
 }
-
 .producto{
-  background:#fff;
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-  transition:0.3s;
+  background:#fff;border-radius:12px;overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,.1)
 }
+.producto img{width:100%;height:200px;object-fit:cover}
+.info{padding:10px}
+.info h3{font-size:15px}
+.precio{color:#00a650;font-weight:600}
+select,button.add{width:100%;margin-top:6px;padding:6px;border-radius:6px}
+.stock{font-size:12px;color:#888}
 
-.producto:hover{
-  transform:translateY(-5px);
+/* CARRITO */
+.carrito{
+  position:fixed;bottom:0;left:0;right:0;
+  background:#fff;border-top:2px solid #ddd;
+  padding:10px;display:none
 }
+.dark .carrito{background:#1e1e1e}
+.carrito button{width:100%;padding:10px;margin-top:5px}
 
-.producto img{
-  width:100%;
-  height:300px;
-  object-fit:cover;
-}
-
-.info{
-  padding:15px;
-}
-
-.info h3{
-  font-size:18px;
-}
-
-.talle{
-  font-size:13px;
-  color:#666;
-  margin:5px 0;
-}
-
-.precio{
-  font-weight:600;
-  color:#00a650;
-  margin:8px 0;
-}
-
-.boton{
-  display:block;
-  background:#25D366;
-  color:#fff;
-  text-align:center;
-  padding:10px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:500;
-}
-
-/* FOOTER */
-footer{
-  background:#111;
-  color:#aaa;
-  text-align:center;
-  padding:20px;
-  font-size:13px;
+@media(min-width:768px){
+  nav{display:flex!important;flex-direction:row;background:none}
+  .menu-btn{display:none}
+  .carrito{width:350px;right:20px;left:auto;border-radius:10px}
 }
 </style>
 </head>
@@ -156,92 +73,89 @@ footer{
 <body>
 
 <header>
-  <div class="header-container">
+  <div class="header">
     <h2>Urban Style</h2>
-    <nav>
-      <a href="#">Inicio</a>
-      <a href="#">Remeras</a>
-      <a href="#">Buzos</a>
-      <a href="#">Pantalones</a>
-      <a href="#">Contacto</a>
-    </nav>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
   </div>
+  <nav id="menu">
+    <a href="#">Inicio</a>
+    <a href="#">Remeras</a>
+    <a href="#">Buzos</a>
+    <a href="#">Pantalones</a>
+  </nav>
 </header>
 
-<div class="banner">
-  <h1>Nueva Temporada 2026</h1>
+<div class="banner"><h1>Nueva Temporada</h1></div>
+
+<div class="top-btns">
+  <button onclick="toggleDark()">🌙 Modo oscuro</button>
+  <button onclick="verCarrito()">🛒 Carrito</button>
 </div>
-
-<div class="categorias">
-  <div class="categoria">Remeras</div>
-  <div class="categoria">Buzos</div>
-  <div class="categoria">Camperas</div>
-  <div class="categoria">Pantalones</div>
-  <div class="categoria">Accesorios</div>
-</div>
-
-<div class="container">
-
-<h2 class="titulo">🔥 Productos Destacados</h2>
 
 <div class="productos">
 
-  <div class="producto">
-    <img src="https://images.unsplash.com/photo-1520975922284-6d8c47f98f6c">
-    <div class="info">
-      <h3>Remera Oversize Negra</h3>
-      <p class="talle">Talles: S / M / L / XL</p>
-      <p class="precio">$12.000</p>
-      <a class="boton" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
-    <div class="info">
-      <h3>Buzo Hoodie Gris</h3>
-      <p class="talle">Talles: M / L / XL</p>
-      <p class="precio">$25.000</p>
-      <a class="boton" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c">
-    <div class="info">
-      <h3>Campera Jean</h3>
-      <p class="talle">Talles: S / M / L</p>
-      <p class="precio">$38.000</p>
-      <a class="boton" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="https://images.unsplash.com/photo-1528701800489-20be1c97b5e4">
-    <div class="info">
-      <h3>Pantalón Cargo</h3>
-      <p class="talle">Talles: 38 al 44</p>
-      <p class="precio">$30.000</p>
-      <a class="boton" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="https://images.unsplash.com/photo-1516826957135-700dedea698c">
-    <div class="info">
-      <h3>Gorra Urban</h3>
-      <p class="talle">Talle único</p>
-      <p class="precio">$8.000</p>
-      <a class="boton" href="https://wa.me/549XXXXXXXXXX">Comprar</a>
-    </div>
-  </div>
-
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1520975922284-6d8c47f98f6c">
+<div class="info">
+<h3>Remera Oversize</h3>
+<p class="precio">$12000</p>
+<select>
+<option>S</option><option>M</option><option>L</option><option>XL</option>
+</select>
+<p class="stock">Stock disponible</p>
+<button class="add" onclick="agregar('Remera Oversize',12000)">Agregar</button>
 </div>
 </div>
 
-<footer>
-© 2026 Urban Style · Ventas por WhatsApp
-</footer>
+<div class="producto">
+<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
+<div class="info">
+<h3>Buzo Hoodie</h3>
+<p class="precio">$25000</p>
+<select>
+<option>M</option><option>L</option><option>XL</option>
+</select>
+<p class="stock">Stock limitado</p>
+<button class="add" onclick="agregar('Buzo Hoodie',25000)">Agregar</button>
+</div>
+</div>
+
+</div>
+
+<div class="carrito" id="carrito">
+<p id="lista"></p>
+<p><b>Total: $<span id="total">0</span></b></p>
+<button onclick="comprarWsp()">Comprar por WhatsApp</button>
+<button onclick="pagarMP()">Pagar con Mercado Pago</button>
+</div>
+
+<script>
+let total=0,items=[]
+
+function toggleMenu(){
+  menu.style.display=menu.style.display=="flex"?"none":"flex"
+}
+function toggleDark(){
+  document.body.classList.toggle("dark")
+}
+function agregar(prod,precio){
+  items.push(prod)
+  total+=precio
+  document.getElementById("total").innerText=total
+  document.getElementById("lista").innerText=items.join(", ")
+}
+function verCarrito(){
+  const c=document.getElementById("carrito")
+  c.style.display=c.style.display=="block"?"none":"block"
+}
+function comprarWsp(){
+  const msg=`Pedido: ${items.join(", ")} Total $${total}`
+  window.open(`https://wa.me/549XXXXXXXXXX?text=${encodeURIComponent(msg)}`)
+}
+function pagarMP(){
+  window.open("https://link.mercadopago.com.ar/tutienda")
+}
+</script>
 
 </body>
 </html>
